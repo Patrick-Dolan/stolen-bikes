@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Stolen Bike Locator</title>
+  </head>
+  <body>
+    <div class="container">
+      <form id="findBike">
+        <h3>Enter a distance to search for stolen bikes:</h3>
+        <div class="mb-3">
+          <label for="zipCode" class="form-label">Zip Code</label>
+          <input type="number" class="form-control" id="searchZip">
+        </div>
+        <div class="mb-3">
+          <label for="searchDistance" class="form-label">Search Distance (in Miles)</label>
+          <input type="number" class="form-control" id="searchDistance">
+        </div>
+        <button class="btn btn-success" type="submit" id="search">Search</button>
+      </form>
+      <div>
+        <div id="resultSummary"></div>
+        <div id="resultsMap" class="pb-3"></div>
+        <div id="results" class="row row-cols-md-2 g-4 pb-3"></div>
+      </div>
+    </div>
+    <div id="errors"></div>
+  <script type="text/javascript" src="bundle.js"></script></body>
+</html>
