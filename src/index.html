@@ -7,11 +7,15 @@
     <div class="container">
       <form id="findBike">
         <h3>Enter a distance to search for your bike.</h3>
-        <label for="zipCode">Zip Code</label>
-        <input type="number" id="searchZip">
-        <label for="searchDistance">Search Distance (in Miles)</label>
-        <input type="number" id="searchDistance">
-        <button class="btn-success" type="submit" id="search">Search</button>
+        <div class="mb-3">
+          <label for="zipCode" class="form-label">Zip Code</label>
+          <input type="number" class="form-control" id="searchZip">
+        </div>
+        <div class="mb-3">
+          <label for="searchDistance" class="form-label">Search Distance (in Miles)</label>
+          <input type="number" class="form-control" id="searchDistance">
+        </div>
+        <button class="btn btn-success" type="submit" id="search">Search</button>
       </form>
       <div>
         <div id="resultSummary"></div>
