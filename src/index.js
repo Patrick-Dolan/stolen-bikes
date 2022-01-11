@@ -42,9 +42,7 @@ function processBikeInformation(response) {
             <li><strong>Where it was Stolen:</strong> ${coordinate}</li>
             <li><strong>Serial Number:</strong> ${response.bikes[i].serial}</li>
           </ul>
-          <div class="bikeMap">
-            <img id="map${[i]}" src="">
-          </div>
+          <a href="${response.bikes[i].url}" target="_blank" class="btn btn-primary">See detailed information</a>
         </div>
       </div>
     </div>
@@ -59,7 +57,7 @@ function displayBikeInformation(bikeInformation, bikesObject) {
 }
 
 function displayMap(mapResponse) {
-  $("#resultsMap").html(`<img src="${mapResponse}" class="img-fluid d-block m-auto">`);
+  $("#resultsMap").html(`<img src="${mapResponse}" class="img-fluid img-thumbnail d-block m-auto">`);
 }
 
 function displayErrors(error){
