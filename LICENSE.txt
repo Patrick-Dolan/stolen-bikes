@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2022 [Author Name Here]
+Copyright (c) 2022 Amber Wilwand, Christen Weston, Karl Starkweather, Patrick Dolan, Phil Curran, and Wajma Niazi.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
