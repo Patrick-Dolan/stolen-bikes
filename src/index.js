@@ -10,7 +10,7 @@ function clearFields() {
   $('.results').text("");
 }
 
-function displayBikeInformation(response) {
+function processBikeInformation(response) {
   let htmlForBikes = "";
   for (let i = 0; i < response.bikes.length; i++) {
     let bikeImage = "https://cdn.pixabay.com/photo/2014/04/03/11/07/bicycle-311808_960_720.png";
@@ -61,7 +61,7 @@ $(document).ready(function() {
     BikeService.findBike(distance, zipCode)
       .then(function(response) {
         if (response.bikes) {
-          let bikeInformation = displayBikeInformation(response);
+          let bikeInformation = processBikeInformation(response);
           $('#results').html(`<p>${response.bikes.length} bikes stolen in this area, the following descriptions were found:</p>${bikeInformation}`);
         } else {
           $('#errors').text(`There was an error: ${response.message}`);
