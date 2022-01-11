@@ -9,7 +9,6 @@ export default class StaticMapService {
         i = bikeResponse.bikes.length;
       }
     }
-    console.log(`https://maps.locationiq.com/v3/staticmap?key=pk.0f4a938d4828b004273ae4bfcb2f01d1&center=${lat},${lon}&zoom=13`);
     return fetch(`https://maps.locationiq.com/v3/staticmap?key=pk.0f4a938d4828b004273ae4bfcb2f01d1&center=${lat},${lon}&zoom=13`)
       .then(function(response) {
         if (!response.ok) {
