@@ -1,9 +1,22 @@
 <!DOCTYPE html>
 <html lang="en-US">
-<head>
-  <title></title>
-</head>
-<body>
-  
-</body>
+  <head>
+    <title>Bike Finder</title>
+  </head>
+  <body>
+    <div class = "container">
+      <form id = "findBike">
+        <h3>Enter a distance to search for your bike.</h3>
+        <label for="zipCode">Zip Code</label>
+        <input type="number" id = "searchZip">
+        <label for="searchDistance">Search Distance (in Miles)</label>
+        <input type="number" id = "searchDistance">
+        <button class = "btn-success" type = "submit" id = "search">Search</button>
+      </form>
+      <div>
+        <div id="results" class="row align-items-start"></div>
+      </div>
+    </div>
+    <div id="errors"></div>
+  </body>
 </html>
