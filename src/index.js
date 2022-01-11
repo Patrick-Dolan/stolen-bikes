@@ -10,7 +10,7 @@ function clearFields() {
   $('.results').text("");
 }
 
-function getElements(response) {
+function displayBikeInformation(response) {
   let htmlForBikes = "";
   for (let i = 0; i < response.bikes.length; i++) {
     let bikeImage = "https://cdn.pixabay.com/photo/2014/04/03/11/07/bicycle-311808_960_720.png";
@@ -41,6 +41,9 @@ function getElements(response) {
             <li><strong>Where it was Stolen:</strong> ${coordinate}</li>
             <li><strong>Serial Number:</strong> ${response.bikes[i].serial}</li>
           </ul>
+          <div class="bikeMap">
+            <img id="map${[i]}">
+          </div>
         </div>
       </div>
     </div>
@@ -58,7 +61,7 @@ $(document).ready(function() {
     BikeService.findBike(distance, zipCode)
       .then(function(response) {
         if (response.bikes) {
-          let bikeInformation = getElements(response);
+          let bikeInformation = displayBikeInformation(response);
           $('#results').html(`<p>${response.bikes.length} bikes stolen in this area, the following descriptions were found:</p>${bikeInformation}`);
         } else {
           $('#errors').text(`There was an error: ${response.message}`);
