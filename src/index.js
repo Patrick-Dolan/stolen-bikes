@@ -3,6 +3,7 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
 import BikeService from './js/BikeService.js';
+import StaticMapService from "./js/StaticMapService";
 
 function clearFields() {
   $('#searchDistance').val("");
@@ -29,7 +30,7 @@ function processBikeInformation(response) {
     }
     htmlForBikes += `
     <div class="col">
-      <div class="card" style="width: 18rem;">
+      <div class="card">
         <img class="card-img-top img-thumbnail" src="${bikeImage}" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">${response.bikes[i]["title"]}</h5>
@@ -42,7 +43,7 @@ function processBikeInformation(response) {
             <li><strong>Serial Number:</strong> ${response.bikes[i].serial}</li>
           </ul>
           <div class="bikeMap">
-            <img id="map${[i]}">
+            <img id="map${[i]}" src="">
           </div>
         </div>
       </div>
@@ -52,20 +53,43 @@ function processBikeInformation(response) {
   return htmlForBikes;
 }
 
+function displayBikeInformation(bikeInformation, bikeObjects) {
+  $('#resultSummary').html(`<br><p>${bikeObjects.bikes.length} bikes stolen in this area, the following bikes were found:</p>`)
+  $('#results').html(`${bikeInformation}`);
+}
+
+// function makeMapApiCalls(bikeObjects) {
+//   let bikeMaps = [];
+//   for (let i = 0; i < 1; i++)
+//     StaticMapService.getMap(bikeObjects[0].bikes["bikes"][i]["stolen_coordinates"][0], bikeObjects[0].bikes["bikes"][i]["stolen_coordinates"][0])
+//       .then((mapResponse) => {
+//         if (mapResponse instanceof Error) {
+//           throw Error(`LocationIQ API error: ${mapResponse.message}`);
+//         }
+        
+//       });
+// }
+
 $(document).ready(function() {
   $('#findBike').submit(function(event) {
     event.preventDefault();
     let distance = $('#searchDistance').val();
     let zipCode = $('#searchZip').val();
+    let bikeInformation = "";
+    let bikeObjects = [];
     clearFields();
     BikeService.findBike(distance, zipCode)
-      .then(function(response) {
-        if (response.bikes) {
-          let bikeInformation = processBikeInformation(response);
-          $('#results').html(`<p>${response.bikes.length} bikes stolen in this area, the following descriptions were found:</p>${bikeInformation}`);
-        } else {
-          $('#errors').text(`There was an error: ${response.message}`);
+      .then((bikeResponse) => {
+        if (bikeResponse instanceof Error) {
+          throw Error(`BikeService API error: ${bikeResponse.message}`);
         }
-      });
+        bikeInformation = processBikeInformation(bikeResponse);
+        bikeObjects = bikeResponse;
+        displayBikeInformation(bikeInformation, bikeObjects);
+        // return makeMapApiCalls(bikeObjects);
+      })
+      // .then((mapResponse) => {
+
+      // });
   });
 });
