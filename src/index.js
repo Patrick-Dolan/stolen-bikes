@@ -30,7 +30,7 @@ function processBikeInformation(response) {
     }
     htmlForBikes += `
     <div class="col">
-      <div class="card">
+      <div class="card h-100">
         <img class="card-img-top img-thumbnail" src="${bikeImage}" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">${response.bikes[i]["title"]}</h5>
@@ -53,22 +53,18 @@ function processBikeInformation(response) {
   return htmlForBikes;
 }
 
-function displayBikeInformation(bikeInformation, bikeObjects) {
-  $('#resultSummary').html(`<br><p>${bikeObjects.bikes.length} bikes stolen in this area, the following bikes were found:</p>`)
+function displayBikeInformation(bikeInformation, bikesObject) {
+  $('#resultSummary').html(`<br><p>${bikesObject.bikes.length} bikes stolen in this area, the following bikes were found:</p>`);
   $('#results').html(`${bikeInformation}`);
 }
 
-// function makeMapApiCalls(bikeObjects) {
-//   let bikeMaps = [];
-//   for (let i = 0; i < 1; i++)
-//     StaticMapService.getMap(bikeObjects[0].bikes["bikes"][i]["stolen_coordinates"][0], bikeObjects[0].bikes["bikes"][i]["stolen_coordinates"][0])
-//       .then((mapResponse) => {
-//         if (mapResponse instanceof Error) {
-//           throw Error(`LocationIQ API error: ${mapResponse.message}`);
-//         }
-        
-//       });
-// }
+function displayMap(mapResponse) {
+  $("#resultsMap").html(`<img src="${mapResponse}" class="img-fluid d-block m-auto">`);
+}
+
+function displayErrors(error){
+  $("#errors").text(`${error}`);
+}
 
 $(document).ready(function() {
   $('#findBike').submit(function(event) {
@@ -76,7 +72,7 @@ $(document).ready(function() {
     let distance = $('#searchDistance').val();
     let zipCode = $('#searchZip').val();
     let bikeInformation = "";
-    let bikeObjects = [];
+    let bikesObject = [];
     clearFields();
     BikeService.findBike(distance, zipCode)
       .then((bikeResponse) => {
@@ -84,12 +80,18 @@ $(document).ready(function() {
           throw Error(`BikeService API error: ${bikeResponse.message}`);
         }
         bikeInformation = processBikeInformation(bikeResponse);
-        bikeObjects = bikeResponse;
-        displayBikeInformation(bikeInformation, bikeObjects);
-        // return makeMapApiCalls(bikeObjects);
+        bikesObject = bikeResponse;
+        displayBikeInformation(bikeInformation, bikesObject);
+        return StaticMapService.getMap(bikeResponse);
       })
-      // .then((mapResponse) => {
-
-      // });
+      .then((mapResponse) => {
+        if (mapResponse instanceof Error) {
+          throw Error(`LocationIQ API error: ${mapResponse.message}`);
+        }
+        displayMap(mapResponse);
+      })
+      .catch((error) => {
+        displayErrors(error.message);
+      });
   });
 });
