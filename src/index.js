@@ -10,7 +10,7 @@ function clearFields() {
 }
 
 function getElements(response) {
-  let descr = "";
+  let htmlForBikes = "";
   for (let i = 0; i < response.bikes.length; i++) {
     let bikeImage = "https://cdn.pixabay.com/photo/2014/04/03/11/07/bicycle-311808_960_720.png";
     let coordinate = "";
@@ -26,7 +26,7 @@ function getElements(response) {
     if (response.bikes[i].description !== null) {
       description = `<p class="card-text">${response.bikes[i].description}</p>`;
     }
-    descr += `
+    htmlForBikes += `
     <div class="col">
       <div class="card" style="width: 18rem;">
         <img class="card-img-top img-thumbnail" src="${bikeImage}" alt="Card image cap">
@@ -45,7 +45,7 @@ function getElements(response) {
     </div>
     `;
   }
-  return descr;
+  return htmlForBikes;
 }
 
 $(document).ready(function() {
@@ -57,8 +57,8 @@ $(document).ready(function() {
     BikeService.findBike(distance, zipCode)
       .then(function(response) {
         if (response.bikes) {
-          let descriptions = getElements(response);
-          $('#results').html(`<p>${response.bikes.length} bikes stolen in this area, the following descriptions were found:</p>${descriptions}`);
+          let bikeInformation = getElements(response);
+          $('#results').html(`<p>${response.bikes.length} bikes stolen in this area, the following descriptions were found:</p>${bikeInformation}`);
         } else {
           $('#errors').text(`There was an error: ${response.message}`);
         }
