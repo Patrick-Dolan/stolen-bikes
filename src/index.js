@@ -6,6 +6,7 @@ import BikeService from './js/BikeService.js';
 
 function clearFields() {
   $('#searchDistance').val("");
+  $("#searchZip").val("");
   $('.results').text("");
 }
 
