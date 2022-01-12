@@ -64,8 +64,8 @@ function displayErrors(error){
   $("#errors").text(`${error}`);
 }
 
-$(document).ready(function() {
-  $('#findBike').submit(function(event) {
+$(document).ready(() => {
+  $('#findBike').submit((event) => {
     event.preventDefault();
     let distance = $('#searchDistance').val();
     let zipCode = $('#searchZip').val();
