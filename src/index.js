@@ -11,6 +11,21 @@ function clearFields() {
   $('.results').text("");
 }
 
+function initMap(start) {
+  // The location of Uluru
+  // const uluru = { lat: -25.344, lng: 131.036 };
+  // The map, centered at Uluru
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 4,
+    center: start,
+  });
+  // The marker, positioned at Uluru
+  const marker = new google.maps.Marker({
+    position: start,
+    map: map,
+  });
+}
+
 function processBikeInformation(response) {
   let htmlForBikes = "";
   for (let i = 0; i < response.bikes.length; i++) {
@@ -71,7 +86,9 @@ $(document).ready(() => {
     let zipCode = $('#searchZip').val();
     let bikeInformation = "";
     let bikesObject = [];
+    let start = {lat: 45.28, lng: -122.12};
     clearFields();
+    initMap(start);
     BikeService.findBike(distance, zipCode)
       .then((bikeResponse) => {
         if (bikeResponse instanceof Error) {
