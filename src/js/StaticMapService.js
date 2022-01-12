@@ -9,12 +9,12 @@ export default class StaticMapService {
         i = bikeResponse.bikes.length;
       }
     }
-    return fetch(`https://maps.locationiq.com/v3/staticmap?key=pk.0f4a938d4828b004273ae4bfcb2f01d1&center=${lat},${lon}&zoom=11`)
+    return fetch(`https://maps.locationiq.com/v3/staticmap?key=${process.env.LOCATIONIQ_KEY}&center=${lat},${lon}&zoom=11`)
       .then(function(response) {
         if (!response.ok) {
           throw Error(response.statusText);
         }
-        return `https://maps.locationiq.com/v3/staticmap?key=pk.0f4a938d4828b004273ae4bfcb2f01d1&center=${lat},${lon}&zoom=11`;
+        return `https://maps.locationiq.com/v3/staticmap?key=${process.env.LOCATIONIQ_KEY}&center=${lat},${lon}&zoom=11`;
       })
       .catch(function(error) {
         return Error(error);
